@@ -27,7 +27,7 @@ final class Git {
         try {
             git = Grgit.open(dir: gitRoot)
         } catch(RepositoryNotFoundException e) {
-            logger.warn("Git repository not found at $gitRoot -- nebula-release tasks will not be available. Use the git.root Gradle property to specify a different directory.", e)
+            logger.warn("Git repository not found at $gitRoot. Use the git.root Gradle property to specify a different directory.", e)
             return
         }
         changelogFileName = extension.changelogFile
