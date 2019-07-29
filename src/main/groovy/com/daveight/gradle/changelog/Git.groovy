@@ -3,7 +3,6 @@ package com.daveight.gradle.changelog
 import org.ajoberstar.grgit.Branch
 import org.ajoberstar.grgit.Grgit
 import org.ajoberstar.grgit.operation.BranchListOp
-import org.eclipse.jgit.errors.RepositoryNotFoundException
 import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.logging.Logger
@@ -24,12 +23,7 @@ final class Git {
 
     Git(Project project, ChangelogPluginExtension extension) {
         def gitRoot = project.hasProperty('git.root') ? project.property('git.root') : project.rootProject.projectDir
-        try {
-            git = Grgit.open(dir: gitRoot)
-        } catch(RepositoryNotFoundException e) {
-            logger.warn("Git repository not found at $gitRoot. Use the git.root Gradle property to specify a different directory.", e)
-            return
-        }
+        git = Grgit.open(dir: gitRoot)
         changelogFileName = extension.changelogFile
         commitMessage = extension.commitMessage
         remote = extension.remote
