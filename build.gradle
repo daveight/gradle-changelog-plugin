@@ -1,0 +1,46 @@
+plugins {
+    id 'groovy'
+    id 'java'
+    id 'java-gradle-plugin'
+    id 'com.gradle.plugin-publish' version '0.10.0'
+}
+
+group 'com.daveight.gradle'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+pluginBundle {
+    website = 'https://github.com/daveight/gradle-changelog-plugin'
+    vcsUrl = 'https://github.com/daveight/gradle-changelog-plugin'
+    description = 'Changelog plugin for gradle'
+    tags = ['changelog', 'release', 'versioning']
+
+    plugins {
+        changelogPlugin {
+            id = 'daveight.changelog'
+            displayName = 'Changelog Plugin'
+        }
+    }
+
+    mavenCoordinates {
+        groupId = project.group
+        artifactId = project.name
+        version = project.version
+    }
+}
+
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+dependencies {
+    compile gradleApi()
+    compile 'org.codehaus.groovy:groovy-all:2.5.7'
+    compile ('org.ajoberstar.grgit:grgit-core:3.1.1') {
+        exclude group: 'org.codehaus.groovy', module: 'groovy'
+    }
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.spockframework:spock-core:1.3-groovy-2.5'
+}
